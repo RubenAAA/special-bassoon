@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<!DOCTYPE html>
+<html>
+
+    <title>Register</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='carousel13.css') }}>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Webflow" name="generator">
+    <link rel="stylesheet" href={{ url_for('static', filename='normalize.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='webflow.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='split-opl.webflow.css') }}>
+<div class="columns w-row">
+    <div class="leftcontent">
+
+          <a class="navbar-brand" href="{{ url_for("index") }}"><img alt="logo" src="{{ url_for("static", filename="twitterlogo.png") }}" width=100px height=100px></a>
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active" href="{{ url_for("index") }}">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="{{ url_for("upload") }}">New Post</a>
+              {% if current_user.is_authenticated == False %}
+              <a class="nav-item nav-link" href="{{ url_for("login") }}">Sign-in</a>
+              <a class="nav-item nav-link" href="{{ url_for("register") }}">Register</a>
+              {% else %}
+              <a class="nav-item nav-link" href="{{ url_for("profilepage", username=User.query.filter_by(id=current_user.id).first().uname) }}">My profile</a>
+              <a class="nav-item nav-link" href="{{ url_for("logout") }}">Logout</a>
+              {% endif %}
+            </div>
+          </div>
+
+
+    <div class="rightcontent">
+<form  method="post"  class="formscss">
+  {{ form.hidden_tag() }}
+
+  {{ form.fname.label }} {{ form.fname() }}
+  <br>  <br>
+  {{ form.lname.label }} {{ form.lname() }}
+  <br>  <br>
+  {{ form.uname.label }} {{ form.uname() }}
+  <br>  <br>
+  {{ form.email.label }} {{ form.email() }}
+  <br>  <br>
+  {{ form.password.label }} {{ form.password() }}
+  <br>  <br>
+  {{ form.submit_button() }}
+
+</form>
+
+<div class="container" style="min-height:100% width:80%">
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+		  <div class="alert alert-warning alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+			{{message}}
+		  </div>
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
+</div>
+
+<h5> Are you already registered? <a href="{{ url_for("login") }}">Sign in here</a></h5>
+</div>
+</div>
+</html>
